@@ -6,13 +6,14 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  function registerUser(ev) {
+  async function registerUser(ev) {
     ev.preventDefault();
-    axios.post('/register', {
+    await axios.post('/register', {
       name,
       email,
       password,
     });
+    alert('Regsitration was successful, now you can Log in!');
   }
   return (
     <div className="mt-4 grow flex items-center justify-around">
