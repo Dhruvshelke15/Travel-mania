@@ -8,12 +8,16 @@ const Register = () => {
   const [password, setPassword] = useState('');
   async function registerUser(ev) {
     ev.preventDefault();
-    await axios.post('/register', {
-      name,
-      email,
-      password,
-    });
-    alert('Regsitration was successful, now you can Log in!');
+    try {
+      await axios.post('/register', {
+        name,
+        email,
+        password,
+      });
+      alert('Regsitration was successful, now you can Log in!');
+    } catch (e) {
+      alert('Registration failed. Try again later.');
+    }
   }
   return (
     <div className="mt-4 grow flex items-center justify-around">

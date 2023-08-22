@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  async function handleLogin(ev) {
+    ev.preventDefault();
+    try {
+      axios.post('/login', { email, password });
+      alert('Login Successful');
+    } catch (e) {
+      alert('Login failed');
+    }
+  }
   return (
     <div className="mt-4 grow flex items-center justify-around">
       <div className="mb-48">
         <h1 className="text-4xl text-center mb-4">Login</h1>
-        <form className="max-w-md mx-auto">
-          <input type="email" placeholder="your@email.com" />
-          <input type="password" placeholder="Your password" />
+        <form className="max-w-md mx-auto" onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="your@email.com"
+            value={email}
+            onChange={ev => setEmail(ev.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Your password"
+            value={password}
+            onChange={ev => setPassword(ev.target.value)}
+          />
           <button className="primary" type="submit">
             Login
           </button>
