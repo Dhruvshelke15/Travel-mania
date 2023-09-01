@@ -8,7 +8,7 @@ export default function Places() {
   const [title, setTitle] = useState('');
   const [address, setAddress] = useState('');
   const [addedPhotos, setAddedPhotos] = useState([]);
-  const [photoLink, setPhotoLink] = useState([]);
+  const [photoLink, setPhotoLink] = useState('');
   const [description, setDescription] = useState('');
   const [perks, setPerks] = useState([]);
   const [extraInfo, setExtraInfo] = useState('');
@@ -44,7 +44,7 @@ export default function Places() {
     const files = ev.target.files;
     const data = new FormData();
     for (let i = 0; i < files.length; i++) {
-      data.append('photos[]', files[i]);
+      data.append('photos', files[i]);
     }
 
     axios
@@ -114,23 +114,22 @@ export default function Places() {
               />
               <button
                 onClick={addPhotoByLink}
-                className=" bg-gray-200 grow p-3 rounded-2xl"
+                className=" bg-gray-200 px-4 rounded-2xl"
               >
                 Add&nbsp;photos
               </button>
             </div>
             <div className="mt-2 grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {addedPhotos.length > 0 &&
-                addedPhotos.map(link => {
-                  console.log(link);
+                addedPhotos.map(link => (
                   <div className="h-32 flex">
                     <img
                       className="rounded-2xl w-full object-cover"
-                      src={`http://localhost:4000/uploads/` + link}
+                      src={`http://localhost:4000/uploads/${link}`}
                       alt=""
                     />
-                  </div>;
-                })}
+                  </div>
+                ))}
               <label className="h-32 cursor-pointer flex items-center gap-1 justify-center cursor-pointer border bg-transparent rounded-2xl p-2 text-2xl text-gray-600">
                 <input
                   type="file"
