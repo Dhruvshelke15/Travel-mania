@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function PhotosUploader({ addedPhotos, onChange }) {
   const [photoLink, setPhotoLink] = useState('');
@@ -14,13 +14,13 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
     });
     setPhotoLink('');
   }
+
   function uploadPhoto(ev) {
     const files = ev.target.files;
     const data = new FormData();
     for (let i = 0; i < files.length; i++) {
       data.append('photos', files[i]);
     }
-
     axios
       .post('/upload', data, {
         headers: { 'Content-type': 'multipart/form-data' },
@@ -30,6 +30,9 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
         onChange(prev => {
           return [...prev, ...filenames];
         });
+      })
+      .catch(error => {
+        console.error('Error uploading files:', error);
       });
   }
 
@@ -55,7 +58,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
             <div className="h-32 flex" key={link}>
               <img
                 className="rounded-2xl w-full object-cover"
-                src={`http://localhost:4000/uploads/` + link}
+                src={`http://localhost:4000/uploads/${link}`}
                 alt=""
               />
             </div>
