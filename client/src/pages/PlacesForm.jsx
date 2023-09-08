@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 import Perks from './Perks';
 import axios from 'axios';
 import PhotosUploader from '../PhotosUploader';
 import AccNav from '../AccNav';
 
 export default function PlacesForm() {
+  const { id } = useParams();
   const [title, setTitle] = useState('');
   const [address, setAddress] = useState('');
   const [addedPhotos, setAddedPhotos] = useState([]);
@@ -15,7 +16,8 @@ export default function PlacesForm() {
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [maxGuests, setMaxGuests] = useState(1);
-  const [redirectToPlacesList, setRedirectToPlacesList] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  useEffect(() => {}, [id]);
 
   function inputHeader(text) {
     return <h2 className="text-2xl mt-4">{text}</h2>;
@@ -46,9 +48,10 @@ export default function PlacesForm() {
       checkOut,
       maxGuests,
     });
+    setRedirect(true);
 
-    if (redirectToPlacesList && action !== 'new') {
-      return <Navigate to={redirect} />;
+    if (redirect) {
+      return <Navigate to={'/account/places'} />;
     }
   }
   return (

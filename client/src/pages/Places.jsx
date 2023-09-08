@@ -1,7 +1,15 @@
 import { Link, useParams } from 'react-router-dom';
 import AccNav from '../AccNav';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Places() {
+  const [places, setPlaces] = useState([]);
+  useEffect(() => {
+    axios.get('/places').then(({ data }) => {
+      setPlaces(data);
+    });
+  }, []);
   return (
     <div>
       <AccNav />
@@ -27,6 +35,23 @@ export default function Places() {
           </svg>
           Add new place
         </Link>
+        <div className="mt-4">
+          {places.length > 0 &&
+            places.map(place => (
+              <Link
+                to={'/account/places/' + place._id}
+                className="flex cursor-pointer bg-gray-100 gap-4 p-4 rounded-2xl"
+              >
+                <div className="w-32 h-32 bg-gray-300 grow shrink-0">
+                  {place.photos.length && <img src={place.photos[0]} alt="" />}
+                </div>
+                <div className="grow-0 shrink">
+                  <h2 className="text-xl">{place.title}</h2>
+                  <p className="text-sm mt-2">{place.description}</p>
+                </div>
+              </Link>
+            ))}
+        </div>
       </div>
     </div>
   );
