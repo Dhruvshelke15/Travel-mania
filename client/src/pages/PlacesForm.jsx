@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Perks from './Perks';
 import axios from 'axios';
 import PhotosUploader from '../PhotosUploader';
@@ -7,6 +7,7 @@ import AccNav from '../AccNav';
 
 export default function PlacesForm() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [address, setAddress] = useState('');
   const [addedPhotos, setAddedPhotos] = useState([]);
@@ -16,7 +17,6 @@ export default function PlacesForm() {
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [maxGuests, setMaxGuests] = useState(1);
-  const [redirect, setRedirect] = useState(false);
   const [price, setPrice] = useState(100);
   useEffect(() => {
     if (!id) {
@@ -71,14 +71,10 @@ export default function PlacesForm() {
         id,
         ...placeData,
       });
-      setRedirect(true);
+      navigate('/account/places');
     } else {
       await axios.post('/places', placeData);
-      setRedirect(true);
-    }
-
-    if (redirect) {
-      return <Navigate to={'/account/places'} />;
+      navigate('/account/places');
     }
   }
   return (
@@ -163,9 +159,8 @@ export default function PlacesForm() {
             />
           </div>
         </div>
-        <div>
-          <button className="primary my-4">Save</button>
-        </div>
+
+        <button className="primary my-4">Save</button>
       </form>
     </div>
   );
