@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { differenceInCalendarDays, format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import AccNav from '../AccNav';
+import PlaceImg from '../PlaceImg';
+import BookingDates from '../BookingDates';
 
 export default function Bookings() {
   const [bookings, setBookings] = useState([]);
@@ -48,7 +49,7 @@ export default function Bookings() {
                       />
                     </svg>
                     <span className="text-2xl">
-                      Total price: ${booking.price}
+                      Total price: ₹{booking.price}
                     </span>
                   </div>
                 </div>
