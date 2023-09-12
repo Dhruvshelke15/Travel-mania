@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import BookingWidget from '../BookingWidget';
 
 export default function PlacePage() {
   const { id } = useParams();
@@ -87,7 +88,8 @@ export default function PlacePage() {
           <div>
             {place.photos?.[0] && (
               <img
-                className="aspect-square object-cover"
+                onClick={() => setShowAllPhotos(true)}
+                className="aspect-square cursor-pointer object-cover"
                 src={'http://localhost:4000/uploads/' + place.photos?.[0]}
                 alt=""
               />
@@ -96,7 +98,8 @@ export default function PlacePage() {
           <div className="grid">
             {place.photos?.[1] && (
               <img
-                className="aspect-square object-cover"
+                onClick={() => setShowAllPhotos(true)}
+                className="aspect-square cursor-pointer object-cover"
                 src={'http://localhost:4000/uploads/' + place.photos?.[1]}
                 alt=""
               />
@@ -104,7 +107,8 @@ export default function PlacePage() {
             <div className="overflow-hidden">
               {place.photos?.[2] && (
                 <img
-                  className="aspect-square object-cover relative top-2"
+                  onClick={() => setShowAllPhotos(true)}
+                  className="aspect-square cursor-pointer object-cover relative top-2"
                   src={'http://localhost:4000/uploads/' + place.photos?.[2]}
                   alt=""
                 />
@@ -131,35 +135,21 @@ export default function PlacePage() {
           Show more photos
         </button>
       </div>
-      <div>
-        <div className="my-4">
-          <h2 className="font-semibold text-2xl">Description</h2>
-          {place.description}
-        </div>
-        <div className="grid grid-cols-2">
+
+      <div className="mt-8 mb-8 grid gap-8 grid-cols-1 md:grid-cols-[2fr_1fr]">
+        <div>
+          <div className="my-4">
+            <h2 className="font-semibold text-2xl">Description</h2>
+            {place.description}
+          </div>
           Check-in: {place.checkIn}
           <br />
           Check-out: {place.checkOut}
           <br />
           Max number of guests: {place.maxGuests}
-          <div>
-            <div className="bg-white shadow p-4 rounded-2xl">
-              <div className="text-2xl text-center">
-                Price: ₹{place.price} /per night
-              </div>
-              <div className="border rounded-2xl mt-4">
-                <div className="p-3 ">
-                  <label>Check in:</label>
-                  <input type="date" />
-                </div>
-                <div className="p-3 ">
-                  <label>Check out:</label>
-                  <input type="date" />
-                </div>
-              </div>
-              <button className="primary mt-4">Book this place</button>
-            </div>
-          </div>
+        </div>
+        <div>
+          <BookingWidget place={place} />
         </div>
       </div>
       <div className="bg-white -mx-8 px-8 py-8 border-t">
