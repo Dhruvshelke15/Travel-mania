@@ -65,7 +65,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
           addedPhotos.map(link => (
             <div className="h-32 flex relative" key={link}>
               <img
-                className="rounded-2xl w-full object-cover"
+                className="rounded-2xl w-full object-cover p-2"
                 src={`${link}`}
                 alt=""
               />
